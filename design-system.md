@@ -97,7 +97,7 @@ One deep green, one warm neutral base, one bright accent. Orange is a signal, no
 | Area | Background | Text |
 |---|---|---|
 | Header (sticky) | evergreen-900 | base; call button is an off-white chip, "Get a free quote" is the orange |
-| Hero | full-bleed photo with an evergreen-900 overlay band behind the text (solid, not gradient) | base |
+| Hero | evergreen-900 band; headline left, photo right, both inside the content container (photo never bleeds to the screen edge) | base |
 | Standard sections | base | ink / evergreen-900 headings |
 | Alternate sections | stone-200 *or* surface | ink |
 | Proof strip / final CTA band | evergreen-900 | base, orange for the key number |

@@ -36,9 +36,9 @@ export default function Home() {
     <>
       <LocalBusinessSchema path="/" featured={["lawn", "landscaping", "fall"]} />
 
-      {/* ── Hero: dark, split, photo bleeds to the right edge ───────── */}
+      {/* ── Hero: dark, split, photo sits inside the container ──────── */}
       <section className="on-dark relative overflow-hidden bg-evergreen-900 text-chalk" aria-labelledby="home-title">
-        <div className="container-x grid gap-10 pb-14 pt-10 md:pb-20 md:pt-14 lg:grid-cols-12 lg:gap-8 lg:pb-24">
+        <div className="container-x grid gap-10 pb-14 pt-10 md:pb-20 md:pt-14 lg:grid-cols-12 lg:items-center lg:gap-12 lg:pb-24">
           <div className="lg:col-span-7 lg:pr-6">
             <p className="eyebrow">Lawn care · Landscaping · Fenton, MI</p>
             <h1 id="home-title" className="display mt-5">
@@ -62,7 +62,7 @@ export default function Home() {
               </span>
             </p>
           </div>
-          <div className="lg:col-span-5 lg:-mr-[max(32px,calc((100vw_-_1200px)/2_+_32px))]">
+          <div className="lg:col-span-5">
             {/* AI-generated hero (generic lawn, not a Kolar Creek job). Once Tyler has a great
                 stripe shot of his own, save it over public/photos/hero-fall-lawn.jpg. */}
             <Photo
@@ -70,9 +70,9 @@ export default function Home() {
               file="hero-fall-lawn.jpg"
               shot="Freshly striped front lawn in early fall morning light, a maple turning orange behind it"
               ratio="4/5"
-              sizes="(min-width: 1024px) 45vw, 100vw"
+              sizes="(min-width: 1280px) 480px, (min-width: 1024px) 40vw, 100vw"
               priority
-              className="max-h-[640px] w-full"
+              className="w-full rounded-[2px] lg:max-h-[600px]"
             />
           </div>
         </div>
