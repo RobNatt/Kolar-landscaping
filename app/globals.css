@@ -1,0 +1,273 @@
+@import "tailwindcss";
+
+/* Tokens from design-system.md §2.1. "chalk" = the warm off-white base
+   (renamed so it doesn't collide with Tailwind's `text-base` size utility). */
+@theme {
+  --color-evergreen-900: #0f2a1f;
+  --color-evergreen-700: #1d4030;
+  --color-evergreen-500: #3a6b50;
+  --color-evergreen-100: #dde7de;
+  --color-chalk: #f5f0e6;
+  --color-surface: #fbf8f2;
+  --color-stone-200: #e4daca;
+  --color-stone-600: #6e6555;
+  --color-ink: #1a1d1a;
+  --color-ink-muted: #4b5049;
+  --color-safety: #ff6b1a;
+  --color-safety-hover: #ff8540; /* lighter, not darker: keeps evergreen text at 6.33:1 */
+  --color-safety-700: #b4470a;
+  --ease-firm: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@theme inline {
+  --font-sans: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 88px;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-chalk);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  h1, h2, h3 { text-wrap: balance; }
+  p, li { text-wrap: pretty; }
+  :focus-visible {
+    outline: 3px solid var(--color-evergreen-900);
+    outline-offset: 3px;
+  }
+  /* Orange on chalk is 2.51:1, so orange rings only on dark sections */
+  .on-dark :focus-visible { outline-color: var(--color-safety); }
+  html:has(dialog[open]) { overflow: hidden; }
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+  @media (min-width: 768px) {
+    .container-x { padding-inline: 32px; }
+  }
+
+  /* ── Type (design-system §3.2) ─────────────────────────────── */
+  .display {
+    font-stretch: 62%;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: 0.005em;
+    font-size: clamp(2.5rem, 4.6vw + 1rem, 4.75rem);
+  }
+  .h2 {
+    font-stretch: 68%;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    font-size: clamp(2rem, 3.5vw + 1rem, 3.25rem);
+    color: var(--color-evergreen-900);
+  }
+  .h3 {
+    font-stretch: 75%;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+    font-size: clamp(1.375rem, 1vw + 1rem, 1.75rem);
+    color: var(--color-evergreen-900);
+  }
+  .on-dark .h2,
+  .on-dark .h3 { color: var(--color-chalk); }
+
+  /* Spec-plate eyebrow (§3.3) */
+  .eyebrow {
+    position: relative;
+    display: inline-block;
+    padding-left: 0.75em;
+    font-size: 0.875rem;
+    font-weight: 700;
+    font-stretch: 75%;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: var(--color-evergreen-700);
+  }
+  .eyebrow::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: var(--color-safety);
+    transform-origin: bottom;
+  }
+  .on-dark .eyebrow { color: var(--color-evergreen-100); }
+
+  .lead {
+    font-size: clamp(1.125rem, 0.5vw + 1rem, 1.3125rem);
+    line-height: 1.5;
+    color: var(--color-ink-muted);
+    max-width: 60ch;
+  }
+  .on-dark .lead { color: var(--color-evergreen-100); }
+
+  .label-caps {
+    font-size: 0.875rem;
+    font-weight: 700;
+    font-stretch: 75%;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ── Buttons (§5.1) ───────────────────────────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 48px;
+    min-width: 48px;
+    padding: 0 1.25rem;
+    border-radius: 2px;
+    font-size: 1.0625rem;
+    font-weight: 700;
+    font-stretch: 75%;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 150ms ease-out, color 150ms ease-out, border-color 150ms ease-out;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--color-safety); color: var(--color-evergreen-900); }
+  .btn-primary:hover { background: var(--color-safety-hover); }
+  .btn-secondary { border: 2px solid var(--color-evergreen-900); color: var(--color-evergreen-900); }
+  .btn-secondary:hover { background: var(--color-evergreen-900); color: var(--color-chalk); }
+  .btn-ondark { border: 2px solid var(--color-chalk); color: var(--color-chalk); }
+  .btn-ondark:hover { background: var(--color-chalk); color: var(--color-evergreen-900); }
+  /* Tap-to-call: chalk chip on the evergreen header so orange stays reserved
+     for "Get a free quote" (one orange per viewport, §2.2 rule 4). */
+  .btn-call { background: var(--color-chalk); color: var(--color-evergreen-900); padding: 0 1rem; }
+  .btn-call:hover { background: var(--color-evergreen-100); }
+
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
+    font-weight: 700;
+    font-stretch: 75%;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-evergreen-700);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+    text-decoration-color: var(--color-stone-200);
+    transition: text-decoration-color 150ms ease-out;
+  }
+  .link-arrow svg { transition: transform 150ms ease-out; }
+  .link-arrow:hover { text-decoration-color: var(--color-safety); }
+  .link-arrow:hover svg { transform: translateX(4px); }
+  .on-dark .link-arrow { color: var(--color-chalk); text-decoration-color: rgb(245 240 230 / 0.3); }
+
+  /* ── Form fields (§5.6) ───────────────────────────────────── */
+  .field { display: grid; gap: 0.375rem; }
+  .field > label { font-weight: 600; font-size: 0.9375rem; color: var(--color-evergreen-900); }
+  .field input,
+  .field select {
+    min-height: 48px;
+    width: 100%;
+    padding: 0 0.875rem;
+    border: 1px solid var(--color-stone-200);
+    border-radius: 2px;
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font: inherit;
+  }
+  .field select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%230f2a1f' stroke-width='2.5'%3E%3Cpath d='m3 6 5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.875rem center;
+    padding-right: 2.5rem;
+  }
+  .field input:focus-visible,
+  .field select:focus-visible { border: 2px solid var(--color-evergreen-900); }
+
+  /* ── Photo slots: plainly a slot, never mistaken for a stock photo ── */
+  .photo-slot {
+    background: var(--color-surface);
+    border: 2px dashed var(--color-stone-600);
+    color: var(--color-evergreen-900);
+  }
+  .photo-slot-chip { background: var(--color-evergreen-900); color: var(--color-chalk); }
+  .on-dark .photo-slot {
+    background: var(--color-evergreen-700);
+    border-color: rgb(221 231 222 / 0.55);
+    color: var(--color-chalk);
+  }
+  .on-dark .photo-slot-chip { background: var(--color-chalk); color: var(--color-evergreen-900); }
+  /* the dashed border already marks it; skip the extra placeholder outline */
+  .ph-on .photo-slot[data-ph] { outline: none; }
+
+  /* ── Quote dialog ─────────────────────────────────────────── */
+  dialog.quote {
+    width: min(560px, calc(100% - 24px));
+    max-height: calc(100dvh - 24px);
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 2px;
+    background: var(--color-surface);
+    color: var(--color-ink);
+  }
+  dialog.quote::backdrop { background: rgb(15 42 31 / 0.78); }
+}
+
+/* ── Placeholder markers (toggle in lib/site.ts) ─────────────── */
+.ph-on [data-ph] {
+  outline: 2px dashed var(--color-safety);
+  outline-offset: 3px;
+}
+
+/* ── Motion §6.2: section-header reveal ──────────────────────
+   Not a fade-up. The orange eyebrow bar grows like a stake going in, then the
+   heading is "mowed in" left-to-right with a clip-path wipe, like one stripe.
+   Hidden only when JS has run (.reveal-ready), so no-JS users see everything. */
+.reveal-ready .section-head .eyebrow { opacity: 0; }
+.reveal-ready .section-head .eyebrow::before { transform: scaleY(0); }
+.reveal-ready .section-head .wipe { clip-path: inset(0 100% 0 0); }
+
+.section-head.is-in .eyebrow {
+  opacity: 1;
+  transition: opacity 200ms ease-out;
+}
+.section-head.is-in .eyebrow::before {
+  transform: none;
+  transition: transform 260ms var(--ease-firm);
+}
+.section-head.is-in .wipe {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 650ms var(--ease-firm) 140ms;
+}
+.wipe { display: block; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    animation: none !important;
+  }
+  .reveal-ready .section-head .eyebrow { opacity: 1; }
+  .reveal-ready .section-head .eyebrow::before { transform: none; }
+  .reveal-ready .section-head .wipe { clip-path: none; }
+}
